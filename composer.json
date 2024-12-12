@@ -1,0 +1,19 @@
+{
+    "name": "hostlink/hk-public-holiday",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Raymond Chong",
+            "email": "mathsgod@yahoo.com"
+        }
+    ],
+    "require": {
+        "symfony/cache": "^6.4",
+        "psr/cache": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "HostLink\\Calendar\\": "src/"
+        }
+    }
+}
