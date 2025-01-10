@@ -42,12 +42,9 @@ class Holiday
             $item->expiresAfter(3600 * 24 * 30);
 
             //download from the internet
-            $data = file_get_contents("https://www.1823.gov.hk/common/ical/$language.json");
-            //clean the file bom and utf8
-            $data = preg_replace('/\x{FEFF}/u', '', $data);
-            $data = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
-
-            $item->set($data["vcalendar"][0]);
+            $data = file_get_contents("https://raw.githubusercontent.com/mathsgod/holiday-data/refs/heads/main/data/$language.json");
+            $data = json_decode($data, true);
+            $item->set($data);
 
             $this->cache->save($item);
         }
@@ -58,10 +55,8 @@ class Holiday
     public function isHoliday(string $date): bool
     {
         $data = $this->getData();
-        foreach ($data["vevent"] as $holiday) {
-            $s = $holiday["dtstart"][0];
-            $s_date = substr($s, 0, 4) . "-" . substr($s, 4, 2) . "-" . substr($s, 6, 2);
-            if ($s_date == $date) {
+        foreach ($data as  $holiday) {
+            if ($holiday["date"] == $date) {
                 return true;
             }
         }
@@ -74,18 +69,11 @@ class Holiday
 
         $data = $this->getData();
         $holidays = [];
-        foreach ($data["vevent"] as $holiday) {
-            $s = $holiday["dtstart"][0];
-
-            $s_date = substr($s, 0, 4) . "-" . substr($s, 4, 2) . "-" . substr($s, 6, 2);
-            $s_time = strtotime($s_date);
+        foreach ($data as $holiday) {
+            $s_time = strtotime($holiday["date"]);
 
             if ($s_time >= strtotime($from) && $s_time <= strtotime($to)) {
-                $holidays[] = [
-                    "id" => $holiday["uid"],
-                    "date" => $s_date,
-                    "name" => $holiday["summary"]
-                ];
+                $holidays[] = $holiday;
             }
         }
         return $holidays;
