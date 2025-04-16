@@ -7,7 +7,7 @@ This library provides functionality to check Hong Kong public holidays and manag
 To install the library, use Composer:
 
 ```bash
-composer require hostlink/calendar
+composer require hostlink/hk-public-holiday
 ```
 
 ## Usage
