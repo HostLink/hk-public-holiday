@@ -9,18 +9,19 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         symfony-cache: ["^6.4", "^7.0", "^8.0"]
 
     name: "symfony/cache ${{ matrix.symfony-cache }}"
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.2"
+          php-version: "8.3"
           coverage: none
 
       - name: Install dependencies
