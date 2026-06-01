@@ -1,5 +1,7 @@
 # HK Public Holiday
 
+[![Tests](https://github.com/HostLink/hk-public-holiday/actions/workflows/tests.yml/badge.svg)](https://github.com/HostLink/hk-public-holiday/actions/workflows/tests.yml)
+
 This library provides functionality to check Hong Kong public holidays and manage holiday data caching.
 
 ## Requirements
