@@ -11,9 +11,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        symfony-cache: ["^6.4", "^7.0", "^8.0"]
+        include:
+          - symfony-cache: "^6.4"
+            php: "8.3"
+          - symfony-cache: "^7.0"
+            php: "8.3"
+          - symfony-cache: "^8.0"
+            php: "8.4"
 
-    name: "symfony/cache ${{ matrix.symfony-cache }}"
+    name: "symfony/cache ${{ matrix.symfony-cache }} / PHP ${{ matrix.php }}"
 
     steps:
       - uses: actions/checkout@v5
@@ -21,7 +27,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.3"
+          php-version: "${{ matrix.php }}"
           coverage: none
 
       - name: Install dependencies
