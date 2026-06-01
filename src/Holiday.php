@@ -2,7 +2,7 @@
 
 namespace HostLink\Calendar;
 
-use Psr\Cache\CacheItemInterface;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class Holiday
@@ -10,7 +10,7 @@ class Holiday
 
     protected $language;
     protected $cache;
-    public function __construct(string $language = "en", CacheItemInterface $cache = null)
+    public function __construct(string $language = "en", ?CacheItemPoolInterface $cache = null)
     {
         //language only support "en","tc" and "sc"
         if (!in_array($language, ["en", "tc", "sc"])) {
@@ -27,7 +27,7 @@ class Holiday
 
     public function clearCache()
     {
-        $this->cache->delete("hk-holidays-" . $this->language);
+        $this->cache->deleteItem("hk-holidays-" . $this->language);
     }
 
     public function getData(): array
